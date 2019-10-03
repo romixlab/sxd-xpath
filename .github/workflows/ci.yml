@@ -8,15 +8,28 @@ on:
     branches:
       - master
 
+_stable_job: &stable_job
+  steps:
+  - uses: actions/checkout@v1
+  - name: Version
+    run: rustc --version
+  - name: Build
+    run: cargo build --verbose
+  - name: Run tests
+    run: cargo test --verbose
+
 jobs:
-  build:
+  linux:
+    <<: *stable_job
+    name: Linux
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v1
-    - name: Version
-      run: rustc --version
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+  windows:
+    <<: *stable_job
+    name: Windows
+    runs-on: windows-latest
+
+  macOS:
+    <<: *stable_job
+    name: macOS
+    runs-on: macOS-latest
