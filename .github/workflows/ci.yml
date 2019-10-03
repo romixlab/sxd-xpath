@@ -10,10 +10,12 @@ on:
 
 jobs:
   build:
-    runs-on: [ubuntu-latest, windows-latest, macOS-latest]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
+    - name: Version
+      run: rustc --version
     - name: Build
       run: cargo build --verbose
     - name: Run tests
